@@ -1,26 +1,37 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const habitLogSchema = new mongoose.Schema(
   {
-    userId: {
+    habit: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'Habit',
       required: true,
     },
-    habitId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Habit",
+      ref: 'User',
       required: true,
     },
-    date: {
-      type: String, // stored as "YYYY-MM-DD" for easy dedup
-      required: [true, "Date is required"],
+    completedDate: {
+      type: String, // stored as "YYYY-MM-DD" for easy daily comparison
+      required: true,
+    },
+    note: {
+      type: String,
+      trim: true,
+      maxlength: [200, 'Note cannot exceed 200 characters'],
+      default: '',
     },
   },
-  { timestamps: { createdAt: "createdAt", updatedAt: false } }
+  {
+    timestamps: true,
+  }
 );
 
-// Prevent duplicate log for same habit on same date
-habitLogSchema.index({ userId: 1, habitId: 1, date: 1 }, { unique: true });
+// Prevent duplicate check-ins: same habit + same date = blocked
+habitLogSchema.index({ habit: 1, completedDate: 1 }, { unique: true });
 
-module.exports = mongoose.model("HabitLog", habitLogSchema);
+// Fast lookup: all logs for a user
+habitLogSchema.index({ user: 1, completedDate: 1 });
+
+module.exports = mongoose.model('HabitLog', habitLogSchema);

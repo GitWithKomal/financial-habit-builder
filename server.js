@@ -11,9 +11,16 @@ const errorMiddleware = require("./middleware/error.middleware");
 
 // ── Routes ───────────────────────────────────────────────
 const healthRoute   = require("./routes/health.routes");
-const authRoutes    = require("./routes/auth.routes");       // ← Phase 5 unlocked
-// const incomeRoutes    = require("./routes/income.routes");
-// const expenseRoutes   = require("./routes/expense.routes");
+const authRoutes    = require("./routes/auth.routes");
+const incomeRoutes  = require("./routes/income.routes");
+const expenseRoutes = require("./routes/expense.routes");
+const habitRoutes = require('./routes/habit.routes');
+const goalRoutes = require("./routes/goal.routes");
+const dashboardRoutes = require("./routes/dashboard.routes");
+
+
+
+
 // const habitRoutes     = require("./routes/habit.routes");
 // const goalRoutes      = require("./routes/goal.routes");
 // const dashboardRoutes = require("./routes/dashboard.routes");
@@ -35,15 +42,19 @@ app.use(cors({
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true }));
 
+
 // ── Routes ───────────────────────────────────────────────
-app.use("/api/health", healthRoute);
-app.use("/api/auth",   authRoutes);                          // ← Phase 5 unlocked
-// app.use("/api/income",     incomeRoutes);
-// app.use("/api/expenses",   expenseRoutes);
-// app.use("/api/habits",     habitRoutes);
-// app.use("/api/goals",      goalRoutes);
-// app.use("/api/dashboard",  dashboardRoutes);
-// app.use("/api/admin",      adminRoutes);
+app.use("/api/health",   healthRoute);
+app.use("/api/auth",     authRoutes);
+app.use("/api/income",   incomeRoutes);
+app.use("/api/expenses", expenseRoutes);
+app.use('/api/habits', habitRoutes);
+app.use("/api/goals", goalRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+// app.use("/api/habits",    habitRoutes);
+// app.use("/api/goals",     goalRoutes);
+// app.use("/api/dashboard", dashboardRoutes);
+// app.use("/api/admin",     adminRoutes);
 
 // ── 404 ───────────────────────────────────────────────────
 app.use((req, res, next) => {
@@ -57,7 +68,6 @@ app.use(errorMiddleware);
 
 // ── Startup ───────────────────────────────────────────────
 const startServer = async () => {
-  // Validate critical env vars
   const required = ["MONGO_URI", "JWT_SECRET"];
   const missing  = required.filter((k) => !process.env[k]);
   if (missing.length) {
@@ -72,9 +82,10 @@ const startServer = async () => {
     console.log(`📡 Environment: ${process.env.NODE_ENV || "development"}`);
     console.log(`🏥 Health:      http://localhost:${PORT}/api/health`);
     console.log(`🔐 Auth:        http://localhost:${PORT}/api/auth`);
+    console.log(`💰 Income:      http://localhost:${PORT}/api/income`);
+    console.log(`💸 Expenses:    http://localhost:${PORT}/api/expenses`);
   });
 
-  // Graceful shutdown
   const shutdown = (signal) => {
     console.log(`\n⚠️  ${signal} received. Shutting down...`);
     server.close(() => process.exit(0));

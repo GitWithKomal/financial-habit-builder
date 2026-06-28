@@ -1,33 +1,41 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const goalContributionSchema = new mongoose.Schema(
   {
-    userId: {
+    goal: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'SavingsGoal',
       required: true,
     },
-    goalId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "SavingsGoal",
+      ref: 'User',
       required: true,
     },
     amount: {
       type: Number,
-      required: [true, "Amount is required"],
-      min: [1, "Contribution must be at least 1"],
+      required: [true, 'Contribution amount is required'],
+      min: [1, 'Contribution must be at least 1'],
     },
     note: {
       type: String,
       trim: true,
-      default: "",
+      maxlength: [200, 'Note cannot exceed 200 characters'],
+      default: '',
     },
-    date: {
+    contributedAt: {
       type: Date,
-      required: [true, "Date is required"],
+      default: Date.now, // allows backdating if needed
     },
   },
-  { timestamps: { createdAt: "createdAt", updatedAt: false } }
+  {
+    timestamps: true,
+  }
 );
 
-module.exports = mongoose.model("GoalContribution", goalContributionSchema);
+// Fast lookup: all contributions for a goal
+goalContributionSchema.index({ goal: 1, contributedAt: -1 });
+// Fast lookup: all contributions by a user
+goalContributionSchema.index({ user: 1 });
+
+module.exports = mongoose.model('GoalContribution', goalContributionSchema);
