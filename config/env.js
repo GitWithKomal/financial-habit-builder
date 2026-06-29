@@ -1,8 +1,4 @@
-/**
- * Centralizes all environment variable access.
- * Import this wherever you need config values instead of
- * calling process.env directly — easier to track and validate.
- */
+
 
 const requiredEnvVars = ["MONGO_URI", "JWT_SECRET"];
 

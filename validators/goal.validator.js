@@ -8,7 +8,7 @@ const VALID_CATEGORIES = [
 
 const VALID_STATUSES = ['active', 'paused', 'completed'];
 
-// ─── Create Goal ─────────────────────────────────────────────
+
 const createGoalValidator = [
   body('title')
     .trim()
@@ -49,7 +49,6 @@ const createGoalValidator = [
     .isString().withMessage('Icon must be a string'),
 ];
 
-// ─── Update Goal ─────────────────────────────────────────────
 const updateGoalValidator = [
   body('title')
     .optional()
@@ -88,7 +87,7 @@ const updateGoalValidator = [
     .isString().withMessage('Icon must be a string'),
 ];
 
-// ─── Add Contribution ─────────────────────────────────────────
+
 const addContributionValidator = [
   body('amount')
     .notEmpty().withMessage('Amount is required')

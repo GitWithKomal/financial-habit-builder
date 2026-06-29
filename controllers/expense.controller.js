@@ -1,6 +1,6 @@
 const Expense = require("../models/Expense.model");
 
-// POST /api/expenses
+
 const createExpense = async (req, res) => {
   try {
     const { amount, category, description, date } = req.body;
@@ -26,7 +26,7 @@ const createExpense = async (req, res) => {
   }
 };
 
-// GET /api/expenses
+
 const getAllExpenses = async (req, res) => {
   try {
     const { page = 1, limit = 10, category, startDate, endDate } = req.query;
@@ -65,7 +65,7 @@ const getAllExpenses = async (req, res) => {
   }
 };
 
-// GET /api/expenses/:id
+
 const getExpenseById = async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
@@ -89,7 +89,7 @@ const getExpenseById = async (req, res) => {
   }
 };
 
-// PUT /api/expenses/:id
+
 const updateExpense = async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
@@ -126,7 +126,7 @@ const updateExpense = async (req, res) => {
   }
 };
 
-// DELETE /api/expenses/:id
+
 const deleteExpense = async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);

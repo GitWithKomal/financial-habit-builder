@@ -1,6 +1,6 @@
 const { body } = require('express-validator');
 
-// ─── Create Habit ────────────────────────────────────────────
+
 const createHabitValidator = [
   body('name')
     .trim()
@@ -36,7 +36,7 @@ const createHabitValidator = [
     .withMessage('Reminder time must be a string like "08:00 AM"'),
 ];
 
-// ─── Update Habit ────────────────────────────────────────────
+
 const updateHabitValidator = [
   body('name')
     .optional()
@@ -78,7 +78,7 @@ const updateHabitValidator = [
     .withMessage('Reminder time must be a string'),
 ];
 
-// ─── Habit Check-in ──────────────────────────────────────────
+
 const checkInValidator = [
   body('note')
     .optional()

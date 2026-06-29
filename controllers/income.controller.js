@@ -1,6 +1,5 @@
 const Income = require("../models/Income.model");
 
-// POST /api/income
 const createIncome = async (req, res) => {
   try {
     const { amount, source, description, type, date } = req.body;
@@ -27,7 +26,7 @@ const createIncome = async (req, res) => {
   }
 };
 
-// GET /api/income
+
 const getAllIncome = async (req, res) => {
   try {
     const { page = 1, limit = 10, startDate, endDate, source } = req.query;
@@ -66,7 +65,7 @@ const getAllIncome = async (req, res) => {
   }
 };
 
-// GET /api/income/:id
+
 const getIncomeById = async (req, res) => {
   try {
     const income = await Income.findById(req.params.id);
@@ -94,7 +93,7 @@ const getIncomeById = async (req, res) => {
   }
 };
 
-// PUT /api/income/:id
+
 const updateIncome = async (req, res) => {
   try {
     const income = await Income.findById(req.params.id);
@@ -134,7 +133,7 @@ const updateIncome = async (req, res) => {
   }
 };
 
-// DELETE /api/income/:id
+
 const deleteIncome = async (req, res) => {
   try {
     const income = await Income.findById(req.params.id);

@@ -12,8 +12,6 @@ const {
 
 const { protect } = require("../middleware/auth.middleware");
 
-// ── Validation rules ─────────────────────────
-
 const registerValidation = [
   body("name")
     .trim()
@@ -53,13 +51,10 @@ const changePasswordValidation = [
     .matches(/\d/).withMessage("New password must contain at least one number"),
 ];
 
-// ── Routes ────────────────────────────────────
-
-// Public
 router.post("/register", registerValidation, register);
 router.post("/login", loginValidation, login);
 
-// Protected
+
 router.get("/me", protect, getMe);
 router.put("/change-password", protect, changePasswordValidation, changePassword);
 router.post("/logout", protect, logout);

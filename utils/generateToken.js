@@ -1,10 +1,9 @@
 const jwt = require("jsonwebtoken");
 
 /**
- * Generates a signed JWT token for the given user ID and role.
- * @param {string} userId - MongoDB _id of the user
- * @param {string} role   - "user" or "admin"
- * @returns {string} signed JWT token
+ * @param {string} userId 
+ * @param {string} role 
+ * @returns {string} 
  */
 const generateToken = (userId, role) => {
   return jwt.sign(

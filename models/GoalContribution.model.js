@@ -25,7 +25,7 @@ const goalContributionSchema = new mongoose.Schema(
     },
     contributedAt: {
       type: Date,
-      default: Date.now, // allows backdating if needed
+      default: Date.now, 
     },
   },
   {
@@ -33,9 +33,8 @@ const goalContributionSchema = new mongoose.Schema(
   }
 );
 
-// Fast lookup: all contributions for a goal
 goalContributionSchema.index({ goal: 1, contributedAt: -1 });
-// Fast lookup: all contributions by a user
+
 goalContributionSchema.index({ user: 1 });
 
 module.exports = mongoose.model('GoalContribution', goalContributionSchema);

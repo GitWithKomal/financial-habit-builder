@@ -13,7 +13,6 @@ const {
   deleteExpense,
 } = require("../controllers/expense.controller");
 
-// Validation for creating an expense
 const expenseValidation = [
   body("amount")
     .isFloat({ gt: 0 })
@@ -42,7 +41,7 @@ const expenseValidation = [
     .withMessage("Valid date is required"),
 ];
 
-// Validation for updating an expense (all fields optional)
+
 const expenseUpdateValidation = [
   body("amount")
     .optional()

@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
-/**
- * Connects to MongoDB using the MONGO_URI from environment variables.
- * Exits the process if connection fails — no point running the server
- * without a database.
- */
+
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI);

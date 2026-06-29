@@ -1,11 +1,5 @@
 const { validationResult } = require('express-validator');
 
-/**
- * Middleware: reads express-validator errors from req.
- * If errors exist → return 400 with details.
- * If clean → call next().
- * Place this AFTER your validator array in any route.
- */
 const validate = (req, res, next) => {
   const errors = validationResult(req);
 

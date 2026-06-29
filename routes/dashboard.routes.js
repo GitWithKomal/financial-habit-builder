@@ -10,10 +10,9 @@ const {
   getGoalStats
 } = require('../controllers/dashboard.controller');
 
-// protect all routes
 router.use(protect);
 
-// ─── Dashboard Routes ─────────────────────────────
+
 router.get('/summary', getSummary);
 router.get('/charts', getCharts);
 router.get('/habits', getHabitStats);

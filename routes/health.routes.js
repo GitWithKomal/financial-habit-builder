@@ -2,15 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 
-/**
- * GET /api/health
- *
- * Health check endpoint — used by:
- * - Render/AWS to verify the server is alive
- * - You, to confirm MongoDB is connected before testing features
- *
- * Returns: server status, MongoDB state, environment, timestamp
- */
+
 router.get("/", (req, res) => {
   const mongoStates = {
     0: "disconnected",

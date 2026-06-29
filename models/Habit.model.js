@@ -38,15 +38,15 @@ const habitSchema = new mongoose.Schema(
     },
     targetDays: {
       type: Number,
-      default: 30, // goal: complete habit for N days
+      default: 30, 
       min: [1, 'Target days must be at least 1'],
     },
     isActive: {
       type: Boolean,
-      default: true, // soft delete flag
+      default: true, 
     },
     reminderTime: {
-      type: String, // e.g. "08:00 AM" — optional reminder
+      type: String,
       default: null,
     },
   },
@@ -55,7 +55,7 @@ const habitSchema = new mongoose.Schema(
   }
 );
 
-// Index for fast per-user queries
+
 habitSchema.index({ user: 1, isActive: 1 });
 
 module.exports = mongoose.model('Habit', habitSchema);

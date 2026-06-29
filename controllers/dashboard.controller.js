@@ -4,9 +4,7 @@ const Expense = require("../models/Expense.model");
 const Habit = require("../models/Habit.model");
 const SavingsGoal = require("../models/SavingsGoal.model");
 
-// ─────────────────────────────────────────────
-// 1. SUMMARY
-// ─────────────────────────────────────────────
+
 const getSummary = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user.id);
@@ -70,9 +68,7 @@ const getSummary = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────
-// 2. CHARTS
-// ─────────────────────────────────────────────
+
 const getCharts = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user.id);
@@ -114,9 +110,7 @@ const getCharts = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────
-// 3. HABITS ANALYTICS
-// ─────────────────────────────────────────────
+
 const getHabitStats = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user.id);
@@ -157,9 +151,7 @@ const getHabitStats = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────
-// 4. GOALS ANALYTICS
-// ─────────────────────────────────────────────
+
 const getGoalStats = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user.id);

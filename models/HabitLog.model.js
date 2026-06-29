@@ -13,7 +13,7 @@ const habitLogSchema = new mongoose.Schema(
       required: true,
     },
     completedDate: {
-      type: String, // stored as "YYYY-MM-DD" for easy daily comparison
+      type: String, 
       required: true,
     },
     note: {
@@ -28,10 +28,10 @@ const habitLogSchema = new mongoose.Schema(
   }
 );
 
-// Prevent duplicate check-ins: same habit + same date = blocked
+
 habitLogSchema.index({ habit: 1, completedDate: 1 }, { unique: true });
 
-// Fast lookup: all logs for a user
+
 habitLogSchema.index({ user: 1, completedDate: 1 });
 
 module.exports = mongoose.model('HabitLog', habitLogSchema);

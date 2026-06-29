@@ -2,13 +2,6 @@ const SavingsGoal       = require('../models/SavingsGoal.model');
 const GoalContribution  = require('../models/GoalContribution.model');
 
 
-// ════════════════════════════════════════════════════════════
-// SAVINGS GOAL MANAGEMENT
-// ════════════════════════════════════════════════════════════
-
-// @desc   Create a new savings goal
-// @route  POST /api/goals
-// @access Private
 const createGoal = async (req, res) => {
   try {
     const {
@@ -38,18 +31,15 @@ const createGoal = async (req, res) => {
 };
 
 
-// @desc   Get all savings goals for the logged-in user
-// @route  GET /api/goals
-// @access Private
 const getAllGoals = async (req, res) => {
   try {
-    // Optional filter: ?status=active | paused | completed
+    
     const filter = { user: req.user.id };
     if (req.query.status) filter.status = req.query.status;
 
     const goals = await SavingsGoal.find(filter).sort({ createdAt: -1 });
 
-    // virtuals (progressPercent, remainingAmount) are included automatically
+    
     res.status(200).json({
       success: true,
       count: goals.length,
@@ -61,9 +51,6 @@ const getAllGoals = async (req, res) => {
 };
 
 
-// @desc   Get a single savings goal with contributions
-// @route  GET /api/goals/:id
-// @access Private
 const getGoalById = async (req, res) => {
   try {
     const goal = await SavingsGoal.findOne({
@@ -75,7 +62,7 @@ const getGoalById = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Savings goal not found' });
     }
 
-    // Fetch contribution history for this goal
+   
     const contributions = await GoalContribution.find({ goal: goal._id })
       .sort({ contributedAt: -1 })
       .select('amount note contributedAt createdAt');
@@ -83,7 +70,7 @@ const getGoalById = async (req, res) => {
     res.status(200).json({
       success: true,
       data: {
-        ...goal.toJSON(), // includes virtuals
+        ...goal.toJSON(), 
         contributions,
       },
     });
@@ -93,9 +80,7 @@ const getGoalById = async (req, res) => {
 };
 
 
-// @desc   Update a savings goal
-// @route  PUT /api/goals/:id
-// @access Private
+
 const updateGoal = async (req, res) => {
   try {
     const goal = await SavingsGoal.findOne({
@@ -117,7 +102,7 @@ const updateGoal = async (req, res) => {
       if (req.body[field] !== undefined) goal[field] = req.body[field];
     });
 
-    // Re-check completion in case targetAmount was lowered
+    
     if (goal.savedAmount >= goal.targetAmount) {
       goal.status = 'completed';
     }
@@ -135,9 +120,7 @@ const updateGoal = async (req, res) => {
 };
 
 
-// @desc   Delete a savings goal and its contributions
-// @route  DELETE /api/goals/:id
-// @access Private
+
 const deleteGoal = async (req, res) => {
   try {
     const goal = await SavingsGoal.findOne({
@@ -149,10 +132,10 @@ const deleteGoal = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Savings goal not found' });
     }
 
-    // Delete all contributions linked to this goal
+    
     await GoalContribution.deleteMany({ goal: goal._id });
 
-    // Hard delete the goal itself
+ 
     await goal.deleteOne();
 
     res.status(200).json({
@@ -165,16 +148,9 @@ const deleteGoal = async (req, res) => {
 };
 
 
-// ════════════════════════════════════════════════════════════
-// GOAL CONTRIBUTION
-// ════════════════════════════════════════════════════════════
-
-// @desc   Add a contribution to a savings goal
-// @route  POST /api/goals/:id/contribute
-// @access Private
 const addContribution = async (req, res) => {
   try {
-    // 1. Verify goal belongs to user
+    
     const goal = await SavingsGoal.findOne({
       _id: req.params.id,
       user: req.user.id,
@@ -184,7 +160,7 @@ const addContribution = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Savings goal not found' });
     }
 
-    // 2. Block contributions to completed goals
+    
     if (goal.status === 'completed') {
       return res.status(400).json({
         success: false,
@@ -194,7 +170,7 @@ const addContribution = async (req, res) => {
 
     const { amount, note, contributedAt } = req.body;
 
-    // 3. Save contribution record
+    
     const contribution = await GoalContribution.create({
       goal:   goal._id,
       user:   req.user.id,
@@ -203,12 +179,12 @@ const addContribution = async (req, res) => {
       contributedAt: contributedAt ? new Date(contributedAt) : new Date(),
     });
 
-    // 4. Update savedAmount on the goal
+    
     goal.savedAmount = parseFloat(
       (goal.savedAmount + contribution.amount).toFixed(2)
     );
 
-    // 5. Auto-complete if target reached
+   
     if (goal.savedAmount >= goal.targetAmount) {
       goal.status = 'completed';
     }
@@ -227,8 +203,8 @@ const addContribution = async (req, res) => {
           title:            goal.title,
           targetAmount:     goal.targetAmount,
           savedAmount:      goal.savedAmount,
-          remainingAmount:  goal.remainingAmount,   // virtual
-          progressPercent:  goal.progressPercent,   // virtual
+          remainingAmount:  goal.remainingAmount,   
+          progressPercent:  goal.progressPercent,   
           status:           goal.status,
         },
       },
@@ -239,12 +215,10 @@ const addContribution = async (req, res) => {
 };
 
 
-// @desc   Get all contributions for a specific goal
-// @route  GET /api/goals/:id/contributions
-// @access Private
+
 const getContributions = async (req, res) => {
   try {
-    // Verify goal ownership first
+   
     const goal = await SavingsGoal.findOne({
       _id: req.params.id,
       user: req.user.id,

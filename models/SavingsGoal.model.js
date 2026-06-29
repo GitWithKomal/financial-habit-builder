@@ -53,7 +53,7 @@ const savingsGoalSchema = new mongoose.Schema(
     },
     deadline: {
       type: Date,
-      default: null, // optional target date
+      default: null,
     },
     status: {
       type: String,
@@ -61,7 +61,7 @@ const savingsGoalSchema = new mongoose.Schema(
       default: 'active',
     },
     icon: {
-      type: String,   // e.g. emoji or icon name for frontend
+      type: String,   
       default: '🎯',
     },
   },
@@ -72,7 +72,7 @@ const savingsGoalSchema = new mongoose.Schema(
   }
 );
 
-// ─── Virtual: progress percentage ────────────────────────────
+
 savingsGoalSchema.virtual('progressPercent').get(function () {
   if (!this.targetAmount) return 0;
   return Math.min(
@@ -81,12 +81,12 @@ savingsGoalSchema.virtual('progressPercent').get(function () {
   );
 });
 
-// ─── Virtual: remaining amount ────────────────────────────────
+
 savingsGoalSchema.virtual('remainingAmount').get(function () {
   return Math.max(this.targetAmount - this.savedAmount, 0);
 });
 
-// Fast per-user queries
+
 savingsGoalSchema.index({ user: 1, status: 1 });
 
 module.exports = mongoose.model('SavingsGoal', savingsGoalSchema);

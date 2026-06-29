@@ -18,19 +18,18 @@ const {
   getStreak,
 } = require('../controllers/habit.controller');
 
-// All routes below are protected
 router.use(protect);
-// ─── Habit Management ────────────────────────────────────────
+
 router.post  ('/',     createHabitValidator, validate, createHabit);
 router.get   ('/',     getAllHabits);
 router.get   ('/:id', getHabitById);
 router.put   ('/:id', updateHabitValidator, validate, updateHabit);
 router.delete('/:id', deleteHabit);
 
-// ─── Habit Check-in ──────────────────────────────────────────
+
 router.post('/:id/checkin', checkInValidator, validate, checkIn);
 
-// ─── Streak ──────────────────────────────────────────────────
+
 router.get('/:id/streak', getStreak);
 
 module.exports = router;

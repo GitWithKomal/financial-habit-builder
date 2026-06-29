@@ -1,10 +1,5 @@
 const { ROLES } = require("../utils/constants");
 
-/**
- * Restricts access to admin-only routes.
- * Must be used AFTER the protect middleware.
- * Usage: router.get("/admin/route", protect, adminOnly, controller)
- */
 const adminOnly = (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
@@ -23,10 +18,6 @@ const adminOnly = (req, res, next) => {
   next();
 };
 
-/**
- * Allows access if the user is the resource owner OR an admin.
- * Usage: router.get("/users/:id", protect, ownerOrAdmin, controller)
- */
 const ownerOrAdmin = (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({

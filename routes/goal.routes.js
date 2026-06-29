@@ -20,10 +20,10 @@ const {
   getContributions,
 } = require('../controllers/goal.controller');
 
-// All routes below require JWT auth
+
 router.use(protect);
 
-// ─── Goal Management ─────────────────────────────────────────
+
 router.post('/', createGoalValidator, validate, createGoal);
 
 router.get('/', getAllGoals);
@@ -34,7 +34,7 @@ router.put('/:id', updateGoalValidator, validate, updateGoal);
 
 router.delete('/:id', deleteGoal);
 
-// ─── Contributions ───────────────────────────────────────────
+
 router.post(
   '/:id/contribute',
   addContributionValidator,

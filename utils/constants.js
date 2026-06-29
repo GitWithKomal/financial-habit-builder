@@ -1,10 +1,10 @@
-// User roles
+
 const ROLES = {
   USER: "user",
   ADMIN: "admin",
 };
 
-// Income categories (for Phase 6)
+
 const INCOME_CATEGORIES = [
   "Salary",
   "Freelance",
@@ -15,7 +15,7 @@ const INCOME_CATEGORIES = [
   "Other",
 ];
 
-// Expense categories (for Phase 6)
+
 const EXPENSE_CATEGORIES = [
   "Food & Dining",
   "Transportation",
@@ -30,10 +30,10 @@ const EXPENSE_CATEGORIES = [
   "Other",
 ];
 
-// Habit frequencies (for Phase 6)
+
 const HABIT_FREQUENCIES = ["daily", "weekly", "monthly"];
 
-// Goal statuses (for Phase 6)
+
 const GOAL_STATUSES = ["active", "completed", "paused", "cancelled"];
 
 module.exports = {
